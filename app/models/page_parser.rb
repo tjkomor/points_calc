@@ -1,20 +1,21 @@
 class PageParser
   attr_reader :page
 
-  def initialize(page)
+  def initialize(page, position)
     @page = page
+    @position = position
   end
 
-  def return_players(position)
+  def return_players
     players = []
-    page.css('.playertablePlayerName').text.split(position).each do |qb|
+    page.css('.playertablePlayerName').text.split(@position).each do |qb|
       players << sspd_filter(qb).split(',').first.gsub(/\A\p{Space}*|\p{Space}*\z/, '')
     end
-    result = []
+    @result = []
     players.each do |player|
-      result << p_filter(player)
+      @result << p_filter(player)
     end
-    result
+    @result
   end
 
   def white_space_filter(player)
@@ -35,6 +36,29 @@ class PageParser
     else
       player
     end
+  end
+
+  def return_points
+    @points_array = []
+    page.css('.playertableStat').text.split('000').each_with_index do |pts, i|
+      if i != 0
+        @points_array << pts.split('.').first.to_i
+      end
+    end
+    @points_array
+  end
+
+  def map_points
+    return_points
+    return_players
+    index = 0
+    totals = {}
+    while index < 40 do
+      totals[@result[index]] = @points_array[index]
+      index += 1
+    end
+    binding.pry
+    totals
   end
 
 end
