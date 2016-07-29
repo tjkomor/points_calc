@@ -5,6 +5,6 @@ class EspnService
   attr_reader :page1
 
   def initialize
-    @page1 = Nokogiri::HTML(open("http://games.espn.go.com/ffl/tools/projections?sortMap=AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4D%2F%2F%2F%2F%2FQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAEBAAtzdGF0UXVlcnlJZAMAAAAB"))
+    @quarterbacks = Nokogiri::HTML(open("http://games.espn.go.com/ffl/tools/projections?&slotCategoryId=0"))
   end
 end
